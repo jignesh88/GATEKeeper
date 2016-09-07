@@ -16,13 +16,27 @@ namespace iAsset.App.Web
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angularmini").Include(
+                        "~/Scripts/angular.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/angularmodules").Include(
+            //            "~/Scripts/angular-*"));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+
+            bundles.Add(new ScriptBundle("~/bundles/angularapp").Include(
+                      "~/app/app.js",
+                      "~/app/modules/flight/flightController.js",
+                      "~/app/modules/flight/flightService.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            
         }
     }
 }
