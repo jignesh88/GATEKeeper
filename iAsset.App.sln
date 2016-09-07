@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40418.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iAsset.App.Web", "iAsset.App.Web\iAsset.App.Web.csproj", "{47A0AC6B-37E6-4285-B6EF-1469AE8667DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iAsset.App.Test", "iAsset.App.Test\iAsset.App.Test.csproj", "{AC6058AB-3E2B-4B2B-B03C-A2421A93E9EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iAsset.App.Domain", "iAsset.App.Domain\iAsset.App.Domain.csproj", "{0380DE12-884F-43A2-B1D5-C546E80A430E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{47A0AC6B-37E6-4285-B6EF-1469AE8667DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47A0AC6B-37E6-4285-B6EF-1469AE8667DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47A0AC6B-37E6-4285-B6EF-1469AE8667DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47A0AC6B-37E6-4285-B6EF-1469AE8667DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC6058AB-3E2B-4B2B-B03C-A2421A93E9EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC6058AB-3E2B-4B2B-B03C-A2421A93E9EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC6058AB-3E2B-4B2B-B03C-A2421A93E9EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC6058AB-3E2B-4B2B-B03C-A2421A93E9EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0380DE12-884F-43A2-B1D5-C546E80A430E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0380DE12-884F-43A2-B1D5-C546E80A430E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0380DE12-884F-43A2-B1D5-C546E80A430E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0380DE12-884F-43A2-B1D5-C546E80A430E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
