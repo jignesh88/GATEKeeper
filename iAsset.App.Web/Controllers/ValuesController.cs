@@ -36,5 +36,7 @@ namespace iAsset.App.Web.Controllers
         public void Delete(int id)
         {
         }
+
+        public 
     }
 }

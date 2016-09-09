@@ -8,23 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body ng-app="flightApp">
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Flight Controller", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <app-header></app-header>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -36,7 +20,12 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angularmini")
     @*@Scripts.Render("~/bundles/angularmodules")*@
-    @Scripts.Render("~/bundles/angularapp")
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/angular-moment.js"></script>
+    <script src="~/app/app.js"></script>
+    <script src="~/app/modules/flight/flightController.js"></script>
+    <script src="~/app/modules/flight/flightService.js"></script>
+    <script src="~/app/directives/header_directive.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
