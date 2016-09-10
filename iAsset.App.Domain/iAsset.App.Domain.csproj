@@ -39,8 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DateTimeExtension.cs" />
     <Compile Include="Entity\Flight.cs" />
     <Compile Include="Entity\Gate.cs" />
+    <Compile Include="Exception\InvalidFlightArrivalTimeException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GateManagerRepository.cs" />
     <Compile Include="Repository\IGateManagerRepository.cs" />

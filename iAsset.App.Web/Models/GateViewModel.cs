@@ -5,9 +5,10 @@ using System.Web;
 
 namespace iAsset.App.Web.Models
 {
-    public class GatesViewModel
+    public class GateViewModel
     {
         public int GateId { get; set; }
-        public List<FlightViewModel> Flights { get; set; }
+        public string Name { get; set; }
+        public FlightViewModel[] Flights { get; set; }
     }
 }

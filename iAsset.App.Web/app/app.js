@@ -4,12 +4,13 @@ app.config(function ($routeProvider) {
 
     var routeConfig = {
         controller: 'flightController',
+        controllerAs : 'vm',
         templateUrl: '/app/modules/flight/templates/gateList.tmp.html',
         resolve: {
-            store: function (fligthStorage) {
-                // Get the correct module (API or localStorage).
-                return fligthStorage.then(function (module) {
-                    module.get(); // Fetch the todo records in the background.
+            store: function (flightStorage) {
+                return flightStorage.then(function (module) {
+                    console.log(module);
+                    module.getFlights({ id: 1, date: moment().format("YYYY-MM-DD") });
                     return module;
                 });
             }

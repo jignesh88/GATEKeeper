@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iAsset.App.Domain.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,34 +10,37 @@ namespace iAsset.App.Domain.Entity
     public class Gate
     {
         public int GateId { get; set; }
-        public List<Flight> Flights { get; set; }
+        public string Name { get; set; }
+        private List<Flight> Flights { get; set; }
 
-        public Flight AddFlight(Flight flight)
+        public Gate()
         {
-            // check are there any flight in gate
-            if (Flights.Count == 0)
-            {
-                Flights.Add(flight);
-            }
-            else
-            {
-                foreach (var f in Flights)
-                {
-                    
-                }
-            }
+            Flights = new List<Flight>();
+        }
 
+        public Flight AddFlight(int id, string name, DateTime arrivalTime, DateTime departureTime)
+        {
+            var flight = new Flight(id, name, arrivalTime, departureTime, GateId);
+            Flights.Add(flight);
             return flight;
         }
 
         public void RemoveFlight(Flight flight)
         {
-
+            Flights.Remove(flight);
         }
 
-        public Flight UpdateFlight(Flight flight)
+        
+        public List<Flight> GetFlights()
         {
-            return flight;
+            return Flights;
+        }
+        
+        public Flight UpdateFlightArrival(int flightId, DateTime arrivalTime)
+        {
+            var orig = Flights.Where(f => f.FlightId == flightId).FirstOrDefault();
+            orig.UpdateArrivalTime(arrivalTime);
+            return orig;
         }
     }
 }

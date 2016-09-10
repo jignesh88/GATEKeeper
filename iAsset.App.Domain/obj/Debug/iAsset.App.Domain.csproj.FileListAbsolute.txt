@@ -1,0 +1,5 @@
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Domain\obj\Debug\iAsset.App.Domain.csprojResolveAssemblyReference.cache
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Domain\bin\Debug\iAsset.App.Domain.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Domain\bin\Debug\iAsset.App.Domain.pdb
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Domain\obj\Debug\iAsset.App.Domain.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Domain\obj\Debug\iAsset.App.Domain.pdb

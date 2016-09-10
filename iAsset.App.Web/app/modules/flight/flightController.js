@@ -1,34 +1,33 @@
-﻿/*global angular */
-
-/**
- * The main controller for the app. The controller:
- * - retrieves and persists the model via the todoStorage service
- * - exposes the model to the template and provides event handlers
- */
-angular.module('flightApp')
+﻿angular.module('flightApp')
 	.controller('flightController', function TodoCtrl($scope, $routeParams, $filter, store) {
 	    'use strict';
 
-	    var todos = $scope.todos = store.todos;
+	    var self = this;
 
-	    $scope.newTodo = '';
-	    $scope.editedTodo = null;
+	    var gates = [];
+        
+	    self.title = 'Welcome to gate keeper..';
+	    
+	    self.gates = function () {
+	        return store.getFlights({ id: 1, date: moment().format("YYYY-MM-DD") });
+	    };
 
-	    $scope.$watch('todos', function () {
-	        $scope.remainingCount = $filter('filter')(todos, { completed: false }).length;
-	        $scope.completedCount = todos.length - $scope.remainingCount;
-	        $scope.allChecked = !$scope.remainingCount;
-	    }, true);
 
-	    // Monitor the current route for changes and adjust the filter accordingly.
-	    $scope.$on('$routeChangeSuccess', function () {
-	        var status = $scope.status = $routeParams.status || '';
-	        $scope.statusFilter = (status === 'active') ?
-				{ completed: false } : (status === 'completed') ?
-				{ completed: true } : {};
-	    });
+	    //$scope.$watch('todos', function () {
+	    //    $scope.remainingCount = $filter('filter')(todos, { completed: false }).length;
+	    //    $scope.completedCount = todos.length - $scope.remainingCount;
+	    //    $scope.allChecked = !$scope.remainingCount;
+	    //}, true);
 
-	    $scope.addTodo = function () {
+	    //// Monitor the current route for changes and adjust the filter accordingly.
+	    //$scope.$on('$routeChangeSuccess', function () {
+	    //    var status = $scope.status = $routeParams.status || '';
+	    //    $scope.statusFilter = (status === 'active') ?
+		//		{ completed: false } : (status === 'completed') ?
+		//		{ completed: true } : {};
+	    //});
+
+	    self.addFlight = function () {
 	        var newTodo = {
 	            title: $scope.newTodo.trim(),
 	            completed: false
@@ -48,10 +47,8 @@ angular.module('flightApp')
 				});
 	    };
 
-	    $scope.editTodo = function (todo) {
-	        $scope.editedTodo = todo;
-	        // Clone the original todo to restore it on demand.
-	        $scope.originalTodo = angular.extend({}, todo);
+	    self.ediFlight = function (todo) {
+	        
 	    };
 
 	    $scope.saveEdits = function (todo, event) {
@@ -85,41 +82,13 @@ angular.module('flightApp')
 				    $scope.editedTodo = null;
 				});
 	    };
-
-	    $scope.revertEdits = function (todo) {
-	        todos[todos.indexOf(todo)] = $scope.originalTodo;
-	        $scope.editedTodo = null;
-	        $scope.originalTodo = null;
-	        $scope.reverted = true;
+        
+	    $scope.removeFlight = function (flight) {
+	        store.delete(flight);
 	    };
 
-	    $scope.removeTodo = function (todo) {
-	        store.delete(todo);
+	    $scope.saveFlight = function (flight) {
+	        store.put(flight);
 	    };
 
-	    $scope.saveTodo = function (todo) {
-	        store.put(todo);
-	    };
-
-	    $scope.toggleCompleted = function (todo, completed) {
-	        if (angular.isDefined(completed)) {
-	            todo.completed = completed;
-	        }
-	        store.put(todo, todos.indexOf(todo))
-				.then(function success() { }, function error() {
-				    todo.completed = !todo.completed;
-				});
-	    };
-
-	    $scope.clearCompletedTodos = function () {
-	        store.clearCompleted();
-	    };
-
-	    $scope.markAll = function (completed) {
-	        todos.forEach(function (todo) {
-	            if (todo.completed !== completed) {
-	                $scope.toggleCompleted(todo, completed);
-	            }
-	        });
-	    };
 	});

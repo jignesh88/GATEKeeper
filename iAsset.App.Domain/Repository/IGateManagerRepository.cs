@@ -9,13 +9,11 @@ namespace iAsset.App.Domain.Repository
 {
     public interface IGateManagerRepository
     {
-        public Flight addNewFlightToGate(int gateId, Flight flight);
-        public void moveFlightFromGate(int newGateId, Flight flight);
-        public void removeFlightFromGate(Flight flight);
-
-        public Flight getFlightById(int flightId);
-        
-        public Gate getGateById(int gateId);
+        Flight addFlight(Flight flight);
+        void updateFlight(Flight flight);
+        void removeFlight(Flight flight);
+        void ChangeFlightGates(int newGateId, Flight flight);
+        List<Gate> getGates();
 
     }
 }
