@@ -1,28 +1,41 @@
-﻿@model iAsset.App.Web.Models.GateViewModel[]
-<h2>GATE KEEPER APPLICATION</h2>
+﻿@using iAsset.App.Domain.Common;
+@model List<iAsset.App.Web.Models.GateViewModel>
 
-TODAY'S DATE :
-<h4>@DateTime.Now.ToString("yyyy-MM-dd")</h4>
-<input type="date" name="today" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="datepicker" />
+<div class="well">
+    <h2>GATE KEEPER APPLICATION</h2>
+    TODAY'S DATE : <h4>@Convert.ToDateTime(ViewBag.CurrentDate).ToString("dd/MM/yyyy")</h4>
+    <form class="form-horizontal">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <input type="date" id="today" name="today" value="@Convert.ToDateTime(ViewBag.CurrentDate).ToString("yyyy-MM-dd")" class="form-control" />
+                </div>
+            </div>
+            <div class="col-sm-3 pull-left">
+                <button class="btn btn-info">
+                    <i class="fa fa-refresh"></i>
+                    Load Data
+                </button>
+            </div>
+        </div>
+    </form>
 
-<button class="btn btn-sm btn-primary pull-right" id="btnAddFlight" data-toggle="modal" data-target="#addFlight">
-    <i class="fa fa-plus"></i> Add Flight
-</button>
-
+    <h1>Terminal 1</h1>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <button class="btn btn-sm btn-primary pull-right" id="btnAddFlight" data-toggle="modal" data-target="#addFlight">
+            <i class="fa fa-plus"></i> Add Flight
+        </button>
+    </div>
+</div>
 <div class="row">
     @foreach (var gate in Model)
     {
         <div class="col-sm-6">
-            <h4>
-                @gate.Name
-
-                
-            </h4>
-
-
-
+            <h4>@gate.Name</h4>
             @{
-        var tempDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0);
+        var tempDate = new DateTime().SetTime(0, 0);
             }
             <table class="table table-bordered" style="margin-top:10px!important;">
                 <thead>
@@ -32,43 +45,49 @@ TODAY'S DATE :
                         <th>Flights</th>
                     </tr>
                 </thead>
-
-                @for (int i = 0; i <= 48; i++)
+                @for (int i = 0; i < 48; i++)
                 {
                     var startTime = tempDate.AddMinutes(30 * i);
                     var endTime = startTime.AddMinutes(29);
                     <tr>
                         <td>
-                            @startTime.ToString("hh:mm")                            
+                            @startTime.ToString("hh:mm")
                         </td>
                         <td>
                             @endTime.ToString("hh:mm")
                         </td>
                         <td>
-                            @foreach (var flight in gate.Flights)
-                            {
-                                if (startTime.Hour == flight.ArrivalTime.Hour && startTime.Minute < flight.ArrivalTime.Minute)
+                            <div class="dropzone">
+                                @foreach (var flight in gate.GetFlights(Convert.ToDateTime(ViewBag.CurrentDate)))
                                 {
-                                    <div class="well well-sm">
-                                        <i class="fa fa-plane"></i>
-                                        <h4>@flight.FlightName</h4>
-                                        <table>
-                                            <tr>
-                                                <td>Arrival Time</td>
-                                                <td><label class="label label-success">@flight.ArrivalTime.ToString("hh:mm")</label></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Depart Time</td>
-                                                <td><label class="label label-danger">@flight.DepartureTime.ToString("hh:mm")</label></td>
-                                            </tr>
-                                        </table>
-                                    </div>
+                                    if (startTime.Hour == flight.ArrivalTime.Hour
+                                        && startTime.Minute <= flight.ArrivalTime.Minute
+                                        && flight.ArrivalTime.Minute < endTime.Minute)
+                                    {
+                                        <div class="well well-sm draggable drag-drop yes-drop" data-id="@flight.FlightId" data-gate-id="@flight.GateId">
+                                            <i class="fa fa-plane"></i>
+                                            &nbsp;
+                                            <a class="btn btn-danger btn-xs pull-right btnDelete" data-toogle="model" data-id="@flight.FlightId" >
+                                                <i class="fa fa-remove pull-right"></i>
+                                            </a>
+
+                                            <h4>@flight.Name</h4>
+                                            <table>
+                                                <tr>
+                                                    <td>Arrival Time</td>
+                                                    <td><label class="label label-success">@flight.ArrivalTime.ToString("hh:mm")</label></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Depart Time</td>
+                                                    <td><label class="label label-danger">@flight.DepartureTime.ToString("hh:mm")</label></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    }
                                 }
-                            }
+                            </div>
                         </td>
-
                     </tr>
-
                 }
             </table>
         </div>
@@ -83,7 +102,7 @@ TODAY'S DATE :
                 <h4 class="modal-title">Add Flight</h4>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="post" name="addFlightForm" id="addFlightForm">
                     <div class="form-group">
                         <label for="Gate">Gate</label>
                         <select name="GateId" class="form-control" required>
@@ -93,17 +112,36 @@ TODAY'S DATE :
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Flight Name</label>
-                        <input type="email" class="form-control" required id="flightName" placeholder="Flight Name">
+                        <input name="Name" class="form-control" required id="FlightName" placeholder="Flight Name">
+                        <input type="hidden" name="FlightId" value="-1" />
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Arrival time</label>
-                        <input type="time" class="form-control" required id="arrivalTime" placeholder="Arrival time hh:mm">
+                        <input name="ArrivalTime" id="ArrivalTime" onkeyup="setDepartTime()" type="time" class="form-control" required id="arrivalTime" placeholder="Arrival time hh:mm">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Departure time</label>
-                        <input type="time" class="form-control" required id="departureTime" placeholder="Departure time hh:mm">
+                        <input name="DepartureTime" id="DepartureTime" type="time" class="form-control" required id="departureTime" placeholder="Departure time hh:mm">
                     </div>
                 </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="btnSaveFlight" class="btn btn-primary">Save Flight</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="editFlight" style="display:none;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Edit Flight</h4>
+            </div>
+            <div class="modal-body">
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -115,14 +153,83 @@ TODAY'S DATE :
 @section scripts{
     <script>
         $(document).ready(function () {
+            init();
             buttonClicks();
         });
 
+        function init() {
+            interact('.draggable')
+              .draggable({
+                  // enable inertial throwing
+                  inertia: true,
+                  // keep the element within the area of it's parent
+                  restrict: {
+                      restriction: "parent",
+                      endOnly: true,
+                      elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
+                  },
+                  // enable autoScroll
+                  autoScroll: true,
+
+                  // call this function on every dragmove event
+                  onmove: dragMoveListener,
+                  // call this function on every dragend event
+                  onend: function (event) {
+                      
+                  }
+              });
+           
+        }
+
+        function dragMoveListener(event) {
+            var target = event.target,
+                // keep the dragged position in the data-x/data-y attributes
+                x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+                y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+            // translate the element
+            target.style.webkitTransform =
+            target.style.transform =
+              'translate(' + x + 'px, ' + y + 'px)';
+
+            // update the posiion attributes
+            target.setAttribute('data-x', x);
+            target.setAttribute('data-y', y);
+        }
+
+        // this is used later in the resizing and gesture demos
+        window.dragMoveListener = dragMoveListener;
+
         function buttonClicks() {
             $("#btnSaveFlight").click(function () {
-                $.post("/","",)
-                $("#addFlight").modal('hide');
+                var data = $("#addFlightForm").serialize();
+                $.post('/Home/addFlight', data, function (data) {
+                    $("#addFlight").modal('hide');
+                    location.reload();
+                    cleanForm();
+                });
+                
             });
+
+            $(".btnDelete").click(function () {
+                var id = $(this).attr('data-id');
+                console.log(id);
+                if (confirm("Are you sure, you want to remove flight??")) {
+                    $.post('/Home/removeFlight', {id: id}, function () {
+                        location.reload();
+                    });
+                }
+            });
+        }
+
+        function cleanForm() {
+            $("#addFlightForm input[type=text|time]").each(function (index, item) {
+                $(item).val('');
+            });
+        }
+
+        function setDepartTime() {
+            $("#DepartureTime").val(moment("2016-09-01 " + $("#ArrivalTime").val()).add(29, 'm').format("HH:mm"));
         }
 
     </script>

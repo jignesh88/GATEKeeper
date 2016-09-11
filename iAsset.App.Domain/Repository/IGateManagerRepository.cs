@@ -13,7 +13,9 @@ namespace iAsset.App.Domain.Repository
         void updateFlight(Flight flight);
         void removeFlight(Flight flight);
         void ChangeFlightGates(int newGateId, Flight flight);
+        Flight getFlight(int id);
         List<Gate> getGates();
+        List<Gate> getGates(DateTime? date);
 
     }
 }

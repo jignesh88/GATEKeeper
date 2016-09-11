@@ -61,3 +61,13 @@ C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\obj\Debug\iAsset.App.Web.csprojResolveAssemblyReference.cache
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\obj\Debug\iAsset.App.Web.dll
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\obj\Debug\iAsset.App.Web.pdb
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.Integration.Mvc.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.Integration.Web.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\iAsset.App.Domain.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\iAsset.App.Domain.pdb
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.xml
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.Integration.Mvc.xml
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\Autofac.Integration.Web.xml
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\AutoMapper.dll
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Web\bin\AutoMapper.xml

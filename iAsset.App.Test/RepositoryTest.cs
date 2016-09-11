@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Autofac;
 using iAsset.App.Domain.Repository;
+using iAsset.App.Domain.Common;
 using iAsset.App.Domain.Entity;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,21 +22,22 @@ namespace iAsset.App.Test
             container = builder.Build();
             repository = container.Resolve<IGateManagerRepository>();
         }
-        [TestMethod]
-        // add flight to gate 1
+
+        /// <summary>
+        /// Add new flight to gate
+        /// </summary>
+        [TestMethod]        
         public void add_new_flight_to_gate()
         {
-            var gate = GetGate(1);
-            Assert.IsTrue(gate.GetFlights().Count > 0);
+            var gate = repository.getGates().FirstOrDefault();
+            var count = gate.Flights.Count;
+            repository.addFlight(GetTestFlight(gate.GateId));
+            Assert.IsTrue(gate.GetFlights(null).Count > count);
         }
 
-        [TestMethod]
-        public void move_flight_to_other_gate()
-        {
-            var gate = GetGate(1);
-            Assert.IsTrue(gate.GetFlights().Count > 0);
-        }
-
+       /// <summary>
+       /// Remove flight from gate
+       /// </summary>
         [TestMethod]
         public void remove_flight_from_gate()
         {
@@ -53,6 +55,10 @@ namespace iAsset.App.Test
             }
         }
 
+
+        /// <summary>
+        /// Update Flight details for gate
+        /// </summary>
         [TestMethod]
         public void update_flight_from_gate()
         {
@@ -63,6 +69,9 @@ namespace iAsset.App.Test
             Assert.AreEqual(getFlight.Name, flight.Name);
         }
 
+        /// <summary>
+        /// move flight from one gate to another
+        /// </summary>
         [TestMethod]
         public void update_flight_gate()
         {
@@ -74,12 +83,22 @@ namespace iAsset.App.Test
             Assert.IsTrue(secondGate.GetFlights().Count > count);
         }
 
+        /// <summary>
+        /// Private method to get test flight
+        /// </summary>
+        /// <param name="gateId"></param>
+        /// <returns></returns>
         private Flight GetTestFlight(int gateId = 1)
         {
-            var testFlight = new Flight(1, "TEST FLIGHT", DateTime.Now, DateTime.Now.AddMinutes(29), gateId);
+            var testFlight = new Flight(1, "TEST FLIGHT", DateTime.Now.SetTime(10,10), DateTime.Now.SetTime(10, 39), gateId);
             return testFlight;
         }
 
+        /// <summary>
+        /// Private method to get gate
+        /// </summary>
+        /// <param name="gateid"></param>
+        /// <returns></returns>
         private Gate GetGate(int gateid =1)
         {
             var gates = repository.getGates();

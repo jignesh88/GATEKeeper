@@ -1,17 +1,16 @@
-﻿using iAsset.App.Domain.Exception;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using iAsset.App.Domain.Common;
 namespace iAsset.App.Domain.Entity
 {
     public class Gate
     {
         public int GateId { get; set; }
         public string Name { get; set; }
-        private List<Flight> Flights { get; set; }
+        public List<Flight> Flights { get; private set; }
 
         public Gate()
         {
@@ -25,15 +24,34 @@ namespace iAsset.App.Domain.Entity
             return flight;
         }
 
+        public Flight AddFlight(Flight flight)
+        {
+            Flights.Add(flight);
+            return flight;
+        }
+
         public void RemoveFlight(Flight flight)
         {
             Flights.Remove(flight);
         }
 
         
+        public List<Flight> GetFlights(DateTime? date)
+        {
+            if (date.HasValue)
+            {
+                var filtered = Flights.Where(f => f.ArrivalTime.EqualDay((DateTime)date)).ToList();
+                return filtered;
+            }
+            else
+            {   
+                return Flights;
+            }
+        }
+
         public List<Flight> GetFlights()
         {
-            return Flights;
+           return Flights;
         }
         
         public Flight UpdateFlightArrival(int flightId, DateTime arrivalTime)

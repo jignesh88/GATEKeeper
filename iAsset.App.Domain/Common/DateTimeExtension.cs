@@ -12,5 +12,10 @@ namespace iAsset.App.Domain.Common
         {
             return new DateTime(dt.Year, dt.Month, dt.Day, hour, minute, 0);
         }
+
+        public static bool EqualDay(this DateTime dt, DateTime otherdate)
+        {
+            return dt.Year.Equals(otherdate.Year) && dt.Month.Equals(otherdate.Month) && dt.Day.Equals(otherdate.Day);
+        }
     }
 }

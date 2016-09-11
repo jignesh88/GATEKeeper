@@ -8,11 +8,11 @@ namespace iAsset.App.Domain.Entity
 {
     public class Flight
     {
-        public int FlightId { get; private set; }
+        public int FlightId { get; set; }
         public string Name { get; set; }
-        public DateTime ArrivalTime { get; private set; }
-        public DateTime DepartureTime { get; private set; }
-        public int GateId { get; private set; }
+        public DateTime ArrivalTime { get; set; }
+        public DateTime DepartureTime { get; set; }
+        public int GateId { get; set; }
 
         public Flight()
         {

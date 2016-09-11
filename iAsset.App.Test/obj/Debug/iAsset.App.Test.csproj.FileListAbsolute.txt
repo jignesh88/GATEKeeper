@@ -1,9 +1,9 @@
-C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\obj\Debug\iAsset.App.Test.csprojResolveAssemblyReference.cache
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\iAsset.App.Test.dll
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\iAsset.App.Test.pdb
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\Autofac.dll
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\iAsset.App.Domain.dll
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\iAsset.App.Domain.pdb
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\bin\Debug\Autofac.xml
+C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\obj\Debug\iAsset.App.Test.csprojResolveAssemblyReference.cache
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\obj\Debug\iAsset.App.Test.dll
 C:\Users\jigneshp.BT\Documents\Visual Studio 2013\Projects\iAsset.App\iAsset.App.Test\obj\Debug\iAsset.App.Test.pdb

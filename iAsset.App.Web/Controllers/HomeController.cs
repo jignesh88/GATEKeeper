@@ -1,4 +1,7 @@
-﻿using iAsset.App.Web.Models;
+﻿using AutoMapper;
+using iAsset.App.Domain.Entity;
+using iAsset.App.Domain.Repository;
+using iAsset.App.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,31 +10,62 @@ using System.Web.Mvc;
 
 namespace iAsset.App.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public ActionResult Index()
-        {
-            List<FlightViewModel> flights = new List<FlightViewModel>();
 
-            for (int i = 0; i < 20; i++)
-            {
-                var arrivalTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0, 0).AddMinutes(i * 30);
-                var departureTime = arrivalTime.AddMinutes(29);
-                flights.Add(new FlightViewModel { GateId = i % 2, FlightName = string.Format("Flight {0}", i), ArrivalTime = arrivalTime, DepartureTime = departureTime, FlightId = i });
-            }
-            GateViewModel[] gates = new GateViewModel[]{
-            new GateViewModel{
-                GateId = 1,
-                Name = "Gate 1",
-                Flights =  flights.Where(f=>f.GateId==0).ToArray()
-            },
-            new GateViewModel{
-                GateId = 2,
-                Name = "Gate 2",
-                Flights = flights.Where(f=>f.GateId==1).ToArray()
-            }
-        };
-            return View(gates);
+        public HomeController()
+        {
+
+        }
+
+        public HomeController(IGateManagerRepository repository)
+            :base(repository)
+        {
+
+        }
+        public ActionResult Index(DateTime? today)
+        {
+            ViewBag.CurrentDate = today.HasValue ? today.Value : DateTime.Now;
+            var gates = _repository.getGates(today);
+            var viewModel = Mapper.Map<List<GateViewModel>>(gates);
+            return View(viewModel);
+        }
+
+        public PartialViewResult editFlight(int id)
+        {
+            return PartialView("_editFlight");
+        }
+
+        [HttpPost]
+        public JsonResult AddFlight(FlightViewModel model)
+        {
+            var dto = Mapper.Map<Flight>(model);
+            _repository.addFlight(dto);
+            return Json(model);
+        }
+
+        [HttpPost]
+        public JsonResult EditFlight(FlightViewModel model)
+        {
+            var dto = Mapper.Map<Flight>(model);
+            _repository.updateFlight(dto);
+            return Json(model);
+        }
+
+        [HttpPost]
+        public JsonResult removeFlight(int id)
+        {
+            var flight = _repository.getFlight(id);
+            _repository.removeFlight(flight);
+            return Json(flight);
+        }
+        
+        [HttpPost]
+        public JsonResult changeGate(int flightId, int newGateId)
+        {
+            var flight = _repository.getFlight(flightId);
+            _repository.ChangeFlightGates(newGateId, flight);
+            return Json("success");
         }
     }
 }
